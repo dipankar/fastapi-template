@@ -1,0 +1,4 @@
+<li id="item-{{ item.id }}"></li>
+    {{ item.name }} - {{ item.description }}
+    <button hx-delete="/items/{{ item.id }}" hx-target="#item-{{ item.id }}" hx-swap="outerHTML">Delete</button>
+</li>

@@ -1,0 +1,16 @@
+<!-- crud_item.html -->
+<tr id="item-{{ item.id }}">
+    {% for field in fields %}
+    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+        {% if field in foreign_keys %}
+        {{ getattr(getattr(item, field.replace("_id", "")), "name", "") }}
+        {% else %}
+        {{ getattr(item, field) }}
+        {% endif %}
+    </td>
+    {% endfor %}
+    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-right">
+        <button hx-get="/{{ model_name }}/{{ item.id }}/edit" hx-target="#content" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
+        <button hx-delete="/{{ model_name }}/{{ item.id }}" hx-target="#item-{{ item.id }}" hx-swap="outerHTML" class="text-red-600 hover:text-red-900">Delete</button>
+    </td>
+</tr>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <script>
+        // Function to get the JWT token from localStorage
+        function getToken() {
+            return localStorage.getItem('jwt_token');
+        }
+
+        // Add the JWT token to all HTMX requests
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['Authorization'] = 'Bearer ' + getToken();
+        });
+    </script>
+</head>
+<body>
+    <h1>Item List</h1>
+    <form hx-post="/items" hx-target="#item-list" hx-swap="beforeend">
+        <input type="text" name="name" placeholder="Item name" required>
+        <input type="text" name="description" placeholder="Item description">
+        <button type="submit">Add Item</button>
+    </form>
+    <ul id="item-list">
+        {% for item in items %}
+            {% include "item_row.html" %}
+        {% endfor %}
+    </ul>
+</body>
+</html>
